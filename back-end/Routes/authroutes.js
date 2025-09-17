@@ -1,5 +1,5 @@
 import express from "express"
-import { createStudent, deleteStudent, getAllStudents, getStudentById, login, logout, register, resetPassword, sendResetOtp, updateStudent } from "../authcontroller/authcontroller.js";
+import { createStudent, createTeacher, deleteStudent, deleteTeacher, getAllStudents, getAllTeacher, getStudentById, getTeacherById, login, logout, register, resetPassword, sendResetOtp, updateStudent, updateTeacher } from "../authcontroller/authcontroller.js";
 
 
 
@@ -15,5 +15,10 @@ router.post("/getallstudent",getAllStudents);
 router.get("/student/:id",getStudentById);
 router.put("/update/:id",updateStudent);
 router.delete("/delete/:id",deleteStudent);
+router.post("/createTeacher",createTeacher);
+router.post("/getallteacher",getAllTeacher);
+router.get("/teacher/:id",getTeacherById);
+router.put("/updateTeacher/:id",updateTeacher);
+router.delete("/deleteTeacher/:id",deleteTeacher);
 
 export default router

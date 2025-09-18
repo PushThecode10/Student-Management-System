@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../src/axios.js";
 import Sidebar from "../component/Sidebar.jsx";
 import Header from "../component/Header.jsx";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 
 const StudentForm = () => {
   const { id } = useParams();

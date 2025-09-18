@@ -250,7 +250,7 @@ const Student = () => {
                         title={student.email} // hover मा पूरा email देखाउने
                       >
                         {student.email.length > 5
-                          ? student.email.substring(0, 5) + "..."
+                          ? student.email.slice(0, 5) + "..."
                           : student.email}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">

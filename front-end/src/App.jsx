@@ -8,6 +8,8 @@ import Login from "../pages/Login.jsx";
 import StudentForm from "../pages/StudentForm.jsx";
 import PrivateRoute from "./layout/PrivateLayout.jsx";
 import Student from "../pages/Student.jsx";
+import Teacher from "../pages/Teacher.jsx";
+import TeacherForm from "../pages/TeacherForm.jsx";
 const App = () => {
   return (
     <Routes>
@@ -50,6 +52,27 @@ const App = () => {
       element={
         <PrivateRoute>
           <StudentForm />
+        </PrivateRoute>
+      } />
+      <Route
+      path="/teacher"
+      element={
+        <PrivateRoute>
+          <Teacher />
+        </PrivateRoute>
+      } />
+         <Route
+      path="/teacherForm"
+      element={
+        <PrivateRoute>
+          <TeacherForm />
+        </PrivateRoute>
+      } />
+         <Route
+      path="/teacherForm/:id"
+      element={
+        <PrivateRoute>
+          <TeacherForm />
         </PrivateRoute>
       } />
     </Routes>

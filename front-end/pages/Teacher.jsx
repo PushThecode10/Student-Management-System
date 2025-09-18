@@ -140,43 +140,43 @@ const Teacher = () => {
                       ID
                     </div>
                   </th>
-                  <th className="px-8 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
                       Name
                     </div>
                   </th>
-                  <th className="px-8 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-pink-500 rounded-full"></div>
                       Gender
                     </div>
                   </th>
-                  <th className="px-8 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-green-500 rounded-full"></div>
                       Phone
                     </div>
                   </th>
-                  <th className="px-8 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-yellow-500 rounded-full"></div>
                       Email
                     </div>
                   </th>
-                  <th className="px-8 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider">
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-1 bg-red-500 rounded-full"></div>
                       Address
                     </div>
                   </th>
-                  <th className="px-8 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider bg-gradient-to-r from-purple-100 to-pink-100">
+                  <th className="px-6 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider bg-gradient-to-r from-purple-100 to-pink-100">
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-indigo-500 rounded-full"></div>
                       Courses
                     </div>
                   </th>
-                  <th className="px-8 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider bg-gradient-to-r from-purple-100 to-pink-100">
+                  <th className="px-6 py-5 text-left text-sm font-black text-gray-700 uppercase tracking-wider bg-gradient-to-r from-purple-100 to-pink-100">
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-indigo-500 rounded-full"></div>
                       Action
@@ -190,19 +190,12 @@ const Teacher = () => {
                     key={teacher._id}
                     className="border-b border-gray-100 hover:bg-gradient-to-r hover:from-blue-50/50 hover:via-purple-50/50 hover:to-pink-50/50 transition-all duration-300 group"
                   >
-                    <td className="px-8 py-6 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
-                          {index + 1}
-                        </div>
-                        <div className="w-1 h-8 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      </div>
-                    </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-6 py-6 ">{index + 1}</td>
+                    <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center gap-4">
-                        <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center shadow-inner group-hover:shadow-lg transition-all duration-300">
+                        <div className="w-1 h-1 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center shadow-inner group-hover:shadow-lg transition-all duration-300">
                           <svg
-                            className="w-7 h-7 text-gray-600"
+                            className="w-4 h-4 text-gray-600"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -228,7 +221,7 @@ const Teacher = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       <span
                         className={`inline-flex px-4 py-2 rounded-full text-sm font-bold shadow-lg transition-all duration-300 group-hover:scale-105 ${
                           teacher.gender === "Male"
@@ -241,11 +234,11 @@ const Teacher = () => {
                         {teacher.gender || "N/A"}
                       </span>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center gap-3 text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
-                        <div className="w-4 h-4 bg-gradient-to-r from-green-100 to-green-200 rounded-lg flex items-center justify-center">
+                        <div className="w-1 h-1 bg-gradient-to-r from-green-100 to-green-200 rounded-lg flex items-center justify-center">
                           <svg
-                            className="w-4 h-4 text-green-600"
+                            className="w-1 h-1 text-green-600"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -263,11 +256,11 @@ const Teacher = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center gap-3 text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
-                        <div className="w-4 h-4 bg-gradient-to-r from-yellow-100 to-yellow-200 rounded-lg flex items-center justify-center">
+                        <div className="w-1 h-1 bg-gradient-to-r from-yellow-100 to-yellow-200 rounded-lg flex items-center justify-center">
                           <svg
-                            className="w-4 h-4 text-yellow-600"
+                            className="w-1 h-1 text-yellow-600"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -288,11 +281,11 @@ const Teacher = () => {
                       </div>
                     </td>
 
-                    <td className="px-8 py-6">
+                    <td className="px-6 py-6">
                       <div className="flex items-start gap-3 max-w-xs">
-                        <div className="w-4 h-4 bg-gradient-to-r from-red-100 to-red-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <div className="w-1 h-1 bg-gradient-to-r from-red-100 to-red-200 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                           <svg
-                            className="w-4 h-4 text-red-600"
+                            className="w-1 h-1 text-red-600"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -316,11 +309,11 @@ const Teacher = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-8 py-6 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center gap-3">
-                        <div className="w-4 h-4 bg-gradient-to-r from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center">
+                        <div className="w-1 h-1 bg-gradient-to-r from-indigo-100 to-indigo-200 rounded-lg flex items-center justify-center">
                           <svg
-                            className="w-4 h-4 text-indigo-600"
+                            className="w-1 h-1 text-indigo-600"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -392,32 +385,6 @@ const Teacher = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </div>
   );
 };

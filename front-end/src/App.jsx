@@ -10,6 +10,8 @@ import PrivateRoute from "./layout/PrivateLayout.jsx";
 import Student from "../pages/Student.jsx";
 import Teacher from "../pages/Teacher.jsx";
 import TeacherForm from "../pages/TeacherForm.jsx";
+import CourseForm from "../pages/CourseForm.jsx";
+import Course from "../pages/Course.jsx";
 const App = () => {
   return (
     <Routes>
@@ -19,62 +21,94 @@ const App = () => {
       <Route path="/resetpassword" element={<ResetPassword />} />
 
       {/* Protected Routes */}
-     <Route
-      path="/dashboard"
-      element={
-        <PrivateRoute>
-          <Dashboard />
-        </PrivateRoute>
-      } />
       <Route
-      path="/sidebar"
-      element={
-        <PrivateRoute>
-          <Sidebar />
-        </PrivateRoute>
-      } />
-      <Route 
-      path="/createForm"
-      element={
-        <PrivateRoute>
-          <StudentForm />
-        </PrivateRoute>
-      }/>
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        }
+      />
       <Route
-      path="/student"
-      element={
-        <PrivateRoute>
-          <Student />
-        </PrivateRoute>
-      } />
-        <Route
-      path="/createForm/:id"
-      element={
-        <PrivateRoute>
-          <StudentForm />
-        </PrivateRoute>
-      } />
+        path="/sidebar"
+        element={
+          <PrivateRoute>
+            <Sidebar />
+          </PrivateRoute>
+        }
+      />
       <Route
-      path="/teacher"
-      element={
-        <PrivateRoute>
-          <Teacher />
-        </PrivateRoute>
-      } />
-         <Route
-      path="/teacherForm"
-      element={
-        <PrivateRoute>
-          <TeacherForm />
-        </PrivateRoute>
-      } />
-         <Route
-      path="/teacherForm/:id"
-      element={
-        <PrivateRoute>
-          <TeacherForm />
-        </PrivateRoute>
-      } />
+        path="/createForm"
+        element={
+          <PrivateRoute>
+            <StudentForm />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/student"
+        element={
+          <PrivateRoute>
+            <Student />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/createForm/:id"
+        element={
+          <PrivateRoute>
+            <StudentForm />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/teacher"
+        element={
+          <PrivateRoute>
+            <Teacher />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/teacherForm"
+        element={
+          <PrivateRoute>
+            <TeacherForm />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/teacherForm/:id"
+        element={
+          <PrivateRoute>
+            <TeacherForm />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/course"
+        element={
+          <PrivateRoute>
+            <Course />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/courseForm"
+        element={
+          <PrivateRoute>
+            <CourseForm />
+          </PrivateRoute>
+        }
+      />
+       <Route
+        path="/courseForm/:id"
+        element={
+          <PrivateRoute>
+            <CourseForm />
+          </PrivateRoute>
+        }
+      />
     </Routes>
   );
 };

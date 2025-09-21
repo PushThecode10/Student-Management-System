@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import API from "../src/axios.js";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../component/Sidebar.jsx";
 import Header from "../component/Header.jsx";
-import { useNavigate, useParams } from "react-router-dom";
 
 const StudentForm = () => {
   const { id } = useParams();
@@ -21,27 +21,45 @@ const StudentForm = () => {
     payment_status: "",
   });
 
+  // State to store all available courses
+  const [courses, setCourses] = useState([]);
+
+  // Fetch courses data from backend
   useEffect(() => {
-    const fetchStudent = async () => {
+    const fetchCourses = async () => {
       try {
-        const res = await API.get(`/auth/student/${id}`);
-        setFormData(res.data);
+        const res = await API.get("/auth/getallcourse");
+        setCourses(res.data);  // Set courses in state
       } catch (error) {
-        console.error("Error fetching student:", err);
-        alert("Failed to load student data.");
+        console.error("Error fetching courses:", error);
+        alert("Failed to load courses.");
       }
     };
-    if(isEditMode){
-    fetchStudent();
+
+    fetchCourses();
+
+    // If it's an edit mode, fetch student data
+    if (isEditMode) {
+      const fetchStudent = async () => {
+        try {
+          const res = await API.get(`/auth/student/${id}`);
+          setFormData(res.data);
+        } catch (error) {
+          console.error("Error fetching student:", error);
+          alert("Failed to load student data.");
+        }
+      };
+      fetchStudent();
     }
-  },[id]);
+  }, [id]);
 
-
-
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  // Handle form submission (create or update student)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -86,10 +104,10 @@ const StudentForm = () => {
         <div className="bg-white rounded-lg shadow-md p-4">
           <div className="mb-20">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              Add New Student
+              {isEditMode ? "Edit" : "Add New"} Student
             </h1>
             <p className="text-gray-600">
-              Fill in the student information below
+              {isEditMode ? "Update" : "Fill in"} the student information below
             </p>
           </div>
 
@@ -163,70 +181,43 @@ const StudentForm = () => {
               </div>
             </div>
 
-            {/* Email */}
+            {/* Course Dropdown */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
-                Email
+                Course
               </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
+              <select
+                name="course"
+                value={formData.course}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                placeholder="Enter email address"
-              />
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 bg-white"
+              >
+                <option value="">Select Course</option>
+                {courses.map((course) => (
+                  <option key={course._id} value={course.Title}>
+                    {course.Title}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            {/* Address */}
+            {/* Payment Status */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
-                Address
+                Payment Status
               </label>
-              <textarea
-                name="address"
-                value={formData.address}
+              <select
+                name="payment_status"
+                value={formData.payment_status}
                 onChange={handleChange}
-                rows="3"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-none"
-                placeholder="Enter full address"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Course */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Course
-                </label>
-                <input
-                  type="text"
-                  name="course"
-                  value={formData.course}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                  placeholder="Enter course name"
-                />
-              </div>
-
-              {/* Payment Status */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Payment Status
-                </label>
-                <select
-                  name="payment_status"
-                  value={formData.payment_status}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 bg-white"
-                >
-                  <option value="">Select Payment Status</option>
-                  <option value="Paid">Paid</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Overdue">Overdue</option>
-                  <option value="Partial">Partial</option>
-                </select>
-              </div>
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 bg-white"
+              >
+                <option value="">Select Payment Status</option>
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+                <option value="Overdue">Overdue</option>
+                <option value="Partial">Partial</option>
+              </select>
             </div>
 
             {/* Submit Button */}
@@ -253,7 +244,7 @@ const StudentForm = () => {
                 type="submit"
                 className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 shadow-sm"
               >
-                {isEditMode ? "update" : "create"}
+                {isEditMode ? "Update" : "Create"}
               </button>
             </div>
           </form>

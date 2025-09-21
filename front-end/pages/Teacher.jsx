@@ -7,7 +7,6 @@ import API from "../src/axios.js";
 const Teacher = () => {
   const navigate = useNavigate();
   const [teachers, setTeachers] = useState([]);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchTeacher = async () => {

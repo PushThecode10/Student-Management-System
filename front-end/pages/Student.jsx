@@ -13,7 +13,7 @@ const Student = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await API.post("/auth/getallstudent");
+        const response = await API.get("/auth/getallstudent");
         setStudents(response.data);
       } catch (err) {
         setError(err.message);
@@ -364,8 +364,7 @@ const Student = () => {
                   </p>
                   <button
                     onClick={() => navigate("/createForm")}
-                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-                  >
+                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
                     Add First Student
                   </button>
                 </div>

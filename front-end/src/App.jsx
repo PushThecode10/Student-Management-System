@@ -7,16 +7,20 @@ import Sidebar from "../component/Sidebar.jsx";
 import Login from "../pages/Login.jsx";
 import StudentForm from "../pages/StudentForm.jsx";
 import PrivateRoute from "./layout/PrivateLayout.jsx";
+import PublicRoute from "./layout/PublicLayout.jsx";
 import Student from "../pages/Student.jsx";
 import Teacher from "../pages/Teacher.jsx";
 import TeacherForm from "../pages/TeacherForm.jsx";
 import CourseForm from "../pages/CourseForm.jsx";
 import Course from "../pages/Course.jsx";
+import Logout from "../pages/Logout.jsx";
 const App = () => {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<PublicRoute>
+        <Login />
+      </PublicRoute>} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/resetpassword" element={<ResetPassword />} />
 
@@ -108,6 +112,14 @@ const App = () => {
             <CourseForm />
           </PrivateRoute>
         }
+      />
+      <Route
+      path="/logout"
+      element={
+        <PrivateRoute>
+          <Logout />
+        </PrivateRoute>
+      }
       />
     </Routes>
   );

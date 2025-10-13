@@ -13,7 +13,7 @@ const Course = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await API.get("/auth/getallcourse");
+        const res = await API.get("/auth/courses/getallcourse");
         setCourses(res.data);
         setLoading(false);
       } catch (error) {
@@ -30,7 +30,7 @@ const Course = () => {
     if (!confirmed) return;
 
     try {
-      const res = await API.delete(`/auth/deleteCourse/${id}`);
+      const res = await API.delete(`/auth/courses/deleteCourse/${id}`);
 
       if (res.status === 200) {
         alert("Course deleted successfully");

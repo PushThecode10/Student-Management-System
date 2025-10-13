@@ -28,8 +28,8 @@ const StudentForm = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await API.get("/auth/getallcourse");
-        setCourses(res.data);  // Set courses in state
+        const res = await API.get("/auth/courses/getallcourse");
+        setCourses(res.data); // Set courses in state
       } catch (error) {
         console.error("Error fetching courses:", error);
         alert("Failed to load courses.");
@@ -37,12 +37,27 @@ const StudentForm = () => {
     };
 
     fetchCourses();
+  }, []);
+
+  const [teachers, setTeachers] = useState([]);
+  // Fetch teachers data from backend
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const res = await API.get("/auth/teachers/getallteacher");
+        setTeachers(res.data);
+      } catch (error) {
+        console.error("Error fetching teachers:", error);
+        alert("Failed to load teachers.");
+      }
+    };
+    fetchTeachers();
 
     // If it's an edit mode, fetch student data
     if (isEditMode) {
       const fetchStudent = async () => {
         try {
-          const res = await API.get(`/auth/student/${id}`);
+          const res = await API.get(`/auth/students/student/${id}`);
           setFormData(res.data);
         } catch (error) {
           console.error("Error fetching student:", error);
@@ -64,14 +79,14 @@ const StudentForm = () => {
     e.preventDefault();
     try {
       if (isEditMode) {
-        const res = await API.put(`/auth/update/${id}`, formData);
+        const res = await API.put(`/auth/students/update/${id}`, formData);
         if (res.status === 200) {
           alert("Student updated successfully!");
         } else {
           alert("Failed to update student.");
         }
       } else {
-        const res = await API.post("/auth/createStudent", formData);
+        const res = await API.post("/auth/students/createStudent", formData);
         if (res.data.success) {
           alert("Student added successfully!");
           setFormData({
@@ -82,6 +97,7 @@ const StudentForm = () => {
             email: "",
             address: "",
             course: "",
+            teacher: "",
             payment_status: "",
           });
         } else {
@@ -182,9 +198,10 @@ const StudentForm = () => {
             </div>
 
             {/* Course Dropdown */}
+            {/* Course Dropdown */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
-                Course
+                Select Course
               </label>
               <select
                 name="course"
@@ -192,10 +209,30 @@ const StudentForm = () => {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 bg-white"
               >
-                <option value="">Select Course</option>
+                <option value="">--Select Course--</option>
                 {courses.map((course) => (
                   <option key={course._id} value={course.Title}>
                     {course.Title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Teacher Dropdown */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Select Teacher
+              </label>
+              <select
+                name="teacher"
+                value={formData.teacher}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 bg-white"
+              >
+                <option value="">--Select Teacher--</option>
+                {teachers.map((teacher) => (
+                  <option key={teacher._id} value={teacher.first_name}>
+                    {teacher.first_name}
                   </option>
                 ))}
               </select>

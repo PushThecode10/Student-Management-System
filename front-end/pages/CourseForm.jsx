@@ -20,7 +20,7 @@ const CourseForm = () => {
 useEffect(() => {
     const fetchCourseData = async () => {
         try {
-            const res = await API.get(`/auth/course/${id}`);
+            const res = await API.get(`/auth/courses/course/${id}`);
             setFormData(res.data);
         }   
         catch (error) {
@@ -40,14 +40,14 @@ useEffect(() => {
     e.preventDefault();
     try {
         if (isEditMode) {
-           const res = await API.put(`/auth/updateCourse/${id}`, formData);
+           const res = await API.put(`/auth/courses/updateCourse/${id}`, formData);
             if (res.status === 200) {
                 alert("Course updated successfully");
             }else {
                 alert("Failed to update course");
             }
         } else {
-            const res =await API.post("/auth/createCourse", formData);
+            const res =await API.post("/auth/courses/createCourse", formData);
             if(res.data.success){
                 alert("Course created successfully");
                 setFormData({

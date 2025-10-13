@@ -1,23 +1,22 @@
 import bcrypt from "bcryptjs";
 import userModel from "../model/usermodel.js";
-import jwt from "jsonwebtoken";
 import transporter from "../config/nodemailer.js";
 import Student from "../model/studentmodel.js";
 import Teacher from "../model/teachermodel.js";
 import Course from "../model/courses.js";
+import { generateToken } from "../utils/token.js";
+import { loginSchema, registerSchema } from "../lib/schema/auth.js";
 // Function to generate tokens
-const generateRefreshToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "7d", // Long-lived
-  });
-};
+
 
 export const register = async (req, res) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
-    return res.json({ success: false, message: "missing details" });
-  }
   try {
+    const validateData = await registerSchema.validateAsync(req.body, { abortEarly: false });//validateAsync is a joi function that valids the input data against joi schema
+    const{name,email,password}= validateData
+    
+    if (!name || !email || !password) {
+      return res.json({ success: false, message: "missing details" });
+    }
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.json({ success: false, message: "user already exists" });
@@ -26,18 +25,9 @@ export const register = async (req, res) => {
     const user = new userModel({ name, email, password: hashedPassword });
     await user.save();
 
-    const refreshToken = generateRefreshToken(user._id);
-
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
     return res.json({
       success: true,
-      message: "regiter success",
+      message: "user registered successfully",
     });
   } catch (error) {
     res.json({ success: false, message: error.message });
@@ -45,13 +35,16 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+try {
+  const validateData = await loginSchema.validateAsync(req.body, { aboutEarly: false});
+
+  const { email, password } = validateData; // req body -> data
   if (!email || !password) {
     return res
       .status(400)
       .json({ success: false, message: "Missing credentials" });
   }
-  try {
+  
     const user = await userModel.findOne({ email });
     if (!user) {
       return res
@@ -65,14 +58,27 @@ export const login = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Invalid password" });
     }
-    const refreshToken = generateRefreshToken(user._id);
-    res.cookie("refreshToken", refreshToken, {
+    const refreshToken = generateToken(user._id, process.env.REFRESH_TOKEN_SECRET, '7d');
+    const accessToken = generateToken(user._id, process.env.ACCESS_TOKEN_SECRET, '10m');
+
+    // res.cookie("refreshToken", refreshToken, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   sameSite: "strict",
+    //   maxAge: 7 * 24 * 60 * 60 * 1000,
+    // });
+   /*  res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production",  
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 1 * 60 * 1000,
+    }); */
+    return res.json({
+      success: true,
+      accessToken,
+      refreshToken,
+      message: "user registered successfully",
     });
-    return res.json({ success: true, message: "login successfully" });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }
@@ -81,6 +87,11 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+     res.clearCookie("accessToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
@@ -275,12 +286,14 @@ export const deleteTeacher = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+//cousrse table
 export const createCourse = async (req, res) => {
   try {
     const course = await Course.create(req.body);
     res.status(201).json({ success: true, course });
   } catch (error) {
-     console.log("Error creating courses:", error);
+    console.log("Error creating courses:", error);
     res.status(400).json({ success: false, message: error.message });
   }
 };
@@ -314,21 +327,21 @@ export const updateCourse = async (req, res) => {
     );
     if (!updateCourse) {
       return res.status(404).json({ error: "course not found" });
-    } 
+    }
     res.status(200).json(updateCourse);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-export const deleteCourse = async (req, res) => { 
+export const deleteCourse = async (req, res) => {
   try {
     const deleteCourse = await Course.findByIdAndDelete(req.params.id);
     if (!deleteCourse) {
       return res.status(404).json({ error: "course not found" });
-    } 
+    }
     res.status(200).json({ message: "Course deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};

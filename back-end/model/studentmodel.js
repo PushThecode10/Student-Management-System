@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const studentSchema = new mongoose.Schema({
   first_name: {
     type: String,
@@ -38,6 +39,10 @@ const studentSchema = new mongoose.Schema({
   payment_status: {
     type: String,
     enum: ["Paid", "Pending", "Overdue", "Partial", "", null], // optional
+    default: null,
+  },
+  teacher:{
+    type: String,
     default: null,
   },
 });

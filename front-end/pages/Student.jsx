@@ -13,7 +13,7 @@ const Student = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await API.get("/auth/getallstudent");
+        const response = await API.get("/auth/students/getallstudent");
         setStudents(response.data);
       } catch (err) {
         setError(err.message);
@@ -32,7 +32,7 @@ const Student = () => {
     if (!confirmed) return;
 
     try {
-      const res = await API.delete(`/auth/delete/${id}`);
+      const res = await API.delete(`/auth/students/delete/${id}`);
       if (res.status === 200) {
         alert("Student deleted successfully");
         setStudents((prev) => prev.filter((student) => student._id !== id));

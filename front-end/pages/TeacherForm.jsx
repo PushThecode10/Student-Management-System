@@ -21,7 +21,7 @@ const TeacherForm = () => {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const res = await API.get(`/auth/teacher/${id}`);
+        const res = await API.get(`/auth/teachers/teacher/${id}`);
         setFormData(res.data);
       } catch (error) {
         console.error("Error fetching teacher:", err);
@@ -43,14 +43,14 @@ const TeacherForm = () => {
 
     try {
       if (isEditMode) {
-        const res = await API.put(`/auth/updateTeacher/${id}`, formData);
+        const res = await API.put(`/auth/teachers/updateTeacher/${id}`, formData);
         if (res.status === 200) {
           alert("teacher update successfully");
         } else {
           alert("failed to update student");
         }
       } else {
-        const res = await API.post("/auth/createTeacher", formData);
+        const res = await API.post("/auth/teachers/createTeacher", formData);
         console.log("Response:", res.data);
         if (res.data.success) {
           alert("Teacher added successfully!");

@@ -11,7 +11,7 @@ const Teacher = () => {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const res = await API.post("/auth/getallteacher");
+        const res = await API.get("/auth/teachers/getallteacher");
         setTeachers(res.data);
       } catch (err) {
         setError(err.message);
@@ -26,7 +26,7 @@ const Teacher = () => {
     );
     if (!confirmed) return;
     try {
-      const res = await API.delete(`/auth/deleteTeacher/${id}`);
+      const res = await API.delete(`/auth/teachers/deleteTeacher/${id}`);
       if (res.status === 200) {
         alert("teacher delete successfully");
         setTeachers((prev) => prev.filter((student) => student._id !== id));
